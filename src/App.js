@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './index.css';
-import View from './View.js';
+import Game from './Game.js';
 
+// App class is used for the entire contents of the browser window. We want to optimize for 
+// screens that have a 16:9 ratio but just in case we want to do anything outside of that ratio
+// this object will give us access to that space
 class App extends Component {
 
   constructor(props) {
@@ -27,25 +30,17 @@ class App extends Component {
     window.removeEventListener('resize', this.handleResize);
   }
 
-
+  //will resize cause child objects to be updated?
   render() {
-    let appWidth = this.state.windowWidth,
-        appHeight = this.state.windowHeight;
-    // Handle resizing so that the view window stays in a 16:9 ratio
-    if ((appWidth / appHeight) > 16 / 9 ) {
-      appWidth = appHeight / 9 * 16;
-    } else {
-      appHeight = appWidth / 16 * 9;
-    }
-
+    // Set the app div to be same size as window. Probably not needed.
     let style = {
       width: this.state.windowWidth + 'px',
       height: this.state.windowHeight + 'px',
-   };
+    };
 
     return (
       <div className="app" style={style}>
-        <View 
+        <Game 
           appWidth = {this.state.windowWidth}
           appHeight = {this.state.windowHeight}
         />
