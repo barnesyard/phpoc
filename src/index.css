@@ -16,3 +16,8 @@ body {
 .game {
   background: #e55;
 }
+
+.btn {
+  width: 20px;
+  height: 20px;
+}

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './index.css';
+import View from './View.js';
+
 
 // The Game class contains all the UI the users will interact with. The view and the list pane and 
 // the info pane will all reside in the Game Div. The intent here it to have this div retain the 
@@ -33,7 +35,10 @@ class Game extends Component {
 
   return (
       <div className="game" style={style}>
-      Got game?
+      <View
+        gameWidth = {gameWidth}
+        gameHeight = {gameHeight}
+      />
       </div>
     );
   }
