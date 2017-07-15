@@ -7,21 +7,41 @@ class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewWidth: this.props.gameWidth - 10,
-      viewHeight: this.props.gameHeight - 10,
-    }
+      isInfoMode: true,
+    };
+  }
+
+  handleModeChange() {
+    this.setState({
+      isInfoMode: !this.state.isInfoMode,
+    });
   }
 
   render() {
+    let viewHeight, viewWidth;
+    // I am subtracting 10 pixels and moving it down and over 5 pixels
+    // This is temporary so I can see the "Game" object behind the View
+    viewWidth = this.props.gameWidth - 10;
+    viewHeight = this.props.gameHeight - 10;
+
+    // In info mode we will reduce the view to show a list pane on the right 
+    // and an info pane along the bottom of the screen
+    if (this.state.isInfoMode) {
+      viewWidth = (.8 * viewWidth);
+      viewHeight = (.8 * viewHeight);
+    }
+
    let style = {
-    width: this.state.viewWidth + 'px',
-    height: this.state.viewHeight + 'px',
-    transform: 'translate3d(5px,5px,0)',
+     width: viewWidth + 'px',
+     height: viewHeight + 'px',
+     transform: 'translate3d(5px,5px,0)',
    };
 
   return (
       <div className="view" style={style}>
-        <Button/>
+        <Button
+          onClick={() => this.handleModeChange()}
+        />
       </div>
     );
   }

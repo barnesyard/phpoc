@@ -10,10 +10,6 @@ class Game extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      gameWidth: this.props.appWidth,
-      gameHeight: this.props.appHeight,
-    }
   }
 
   render() {

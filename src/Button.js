@@ -11,7 +11,7 @@ var Button = React.createClass({
       <button
         className="btn"
         style={buttonStyle}
-        //onClick={this.props.handleClick}
+        onClick={this.props.onClick}
         >i</button>
     );
   }
