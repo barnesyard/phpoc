@@ -9,14 +9,17 @@ body {
   background: #da7;
 }
 
-.view {
-  background: #56e
-}
-
 .game {
   background: #e55;
 }
 
+.view {
+  background: #56e
+}
+
+.infoPane {
+  background: #72c
+}
 .btn {
   width: 20px;
   height: 20px;

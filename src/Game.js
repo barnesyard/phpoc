@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './index.css';
 import View from './View.js';
-
+import InfoPane from './InfoPane.js';
+import ListPane from './ListPane.js';
 
 // The Game class contains all the UI the users will interact with. The view and the list pane and 
 // the info pane will all reside in the Game Div. The intent here it to have this div retain the 
@@ -23,17 +24,21 @@ class Game extends Component {
       gameWidth = this.props.appWidth;
     }
 
-   let style = {
-    width: gameWidth + 'px',
-    height: gameHeight + 'px',
-    //transform: 'translate3d(5px,5px,0)',
-   };
+    let style = {
+      width: gameWidth + 'px',
+      height: gameHeight + 'px',
+      postion: 'relative',
+    };
 
   return (
       <div className="game" style={style}>
       <View
         gameWidth = {gameWidth}
         gameHeight = {gameHeight}
+      />
+      <InfoPane
+        gameWidth = {200}
+        gameHeight = {600}
       />
       </div>
     );
