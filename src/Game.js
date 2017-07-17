@@ -15,7 +15,7 @@ class Game extends Component {
 
   render() {
     let gameHeight, gameWidth;
-    // Handle resizing so that the view window stays in a 16:9 ratio
+    // Handle resizing so that the game div stays in a 16:9 ratio
     if ((this.props.appWidth / this.props.appHeight) > 16 / 9 ) {
       gameWidth = this.props.appHeight / 9 * 16;
       gameHeight = this.props.appHeight;
@@ -23,6 +23,11 @@ class Game extends Component {
       gameHeight = this.props.appWidth / 16 * 9;
       gameWidth = this.props.appWidth;
     }
+
+    // Let the Game object manage the size of the divs that are its children
+    let infoPaneWidth, infoPaneHeight;
+    infoPaneHeight = gameHeight;
+    infoPaneWidth = .2 * gameWidth;
 
     let style = {
       width: gameWidth + 'px',
@@ -37,8 +42,8 @@ class Game extends Component {
         gameHeight = {gameHeight}
       />
       <InfoPane
-        gameWidth = {200}
-        gameHeight = {600}
+        infoPaneHeight = {infoPaneHeight}
+        infoPaneWidth = {infoPaneWidth}
       />
       </div>
     );

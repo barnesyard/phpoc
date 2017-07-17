@@ -22,8 +22,8 @@ class View extends Component {
     let viewHeight, viewWidth;
     // I am subtracting 10 pixels and moving it down and over 5 pixels
     // This is temporary so I can see the "Game" object behind the View
-    viewWidth = this.props.gameWidth - 8;
-    viewHeight = this.props.gameHeight - 8;
+    viewWidth = this.props.gameWidth;
+    viewHeight = this.props.gameHeight;
 
     // In info mode we will reduce the view to show a list pane on the right 
     // and an info pane along the bottom of the screen
@@ -35,8 +35,6 @@ class View extends Component {
    let style = {
      width: viewWidth + 'px',
      height: viewHeight + 'px',
-     margin: '4px',
-     left: '0px',
      position: 'relative',
    };
 
