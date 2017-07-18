@@ -50,7 +50,7 @@ class Game extends Component {
     listPaneLeft = viewWidth;
 
     let infoPaneWidth, infoPaneHeight, infoPaneTop;
-    infoPaneHeight = .2 * viewHeight;
+    infoPaneHeight = .2 * gameHeight;
     infoPaneWidth = viewWidth;
     infoPaneTop = viewHeight;
 
@@ -63,8 +63,8 @@ class Game extends Component {
   return (
       <div className="game" style={style}>
       <View
-        viewWidth = {gameWidth}
-        viewHeight = {gameHeight}
+        viewWidth = {viewWidth}
+        viewHeight = {viewHeight}
       />
       <Button
         onClick={() => this.handleModeChange()}

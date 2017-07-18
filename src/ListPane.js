@@ -14,9 +14,6 @@ class ListPane extends Component {
 
     return (
       <div className="listPane" style={style}>
-      list pane! <br/>
-      width: {this.props.listPaneWidth} <br/>
-      height: {this.props.listPaneHeight}
       </div>
     );
   }

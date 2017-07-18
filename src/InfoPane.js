@@ -14,10 +14,6 @@ class InfoPane extends Component {
 
     return (
       <div className="infoPane" style={style}>
-      info pane! <br/>
-      width: {this.props.infoPaneWidth} <br/>
-      height: {this.props.infoPaneHeight} <br/>
-      top: {this.props.infoPaneTop}
       </div>
     );
   }

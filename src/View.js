@@ -16,8 +16,6 @@ class View extends Component {
 
   return (
       <div className="view" style={style}>
-        width: {this.props.viewWidth} <br/>
-        height: {this.props.viewHeight} <br/>
       </div>
     );
   }
