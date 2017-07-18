@@ -4,13 +4,11 @@ import './index.css';
 class InfoPane extends Component {
   
   render() {
-
     let style = {
      width: this.props.infoPaneWidth + 'px',
      height: this.props.infoPaneHeight + 'px',
-     top: '0px',
-     right: '0px',
-     float: 'right',
+     top: this.props.infoPaneTop + '0px',
+     left: '0px',
      position: 'absolute',
     };
 
@@ -18,7 +16,8 @@ class InfoPane extends Component {
       <div className="infoPane" style={style}>
       info pane! <br/>
       width: {this.props.infoPaneWidth} <br/>
-      height: {this.props.infoPaneHeight}
+      height: {this.props.infoPaneHeight} <br/>
+      top: {this.props.infoPaneTop}
       </div>
     );
   }

@@ -3,6 +3,7 @@ import './index.css';
 import View from './View.js';
 import InfoPane from './InfoPane.js';
 import ListPane from './ListPane.js';
+import Button from './Button.js';
 
 // The Game class contains all the UI the users will interact with. The view and the list pane and 
 // the info pane will all reside in the Game Div. The intent here it to have this div retain the 
@@ -11,6 +12,15 @@ class Game extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      isInfoMode: true,
+    };
+  }
+
+  handleModeChange() {
+    this.setState({
+      isInfoMode: !this.state.isInfoMode,
+    });
   }
 
   render() {
@@ -25,9 +35,24 @@ class Game extends Component {
     }
 
     // Let the Game object manage the size of the divs that are its children
-    let infoPaneWidth, infoPaneHeight;
-    infoPaneHeight = gameHeight;
-    infoPaneWidth = .2 * gameWidth;
+    let viewWidth, viewHeight;
+    if (this.state.isInfoMode) {
+      viewWidth = .8 * gameWidth;
+      viewHeight = .8 * gameHeight;
+    } else {
+      viewWidth = gameWidth;
+      viewHeight = gameHeight;
+    }
+
+    let listPaneWidth, listPaneHeight, listPaneLeft;
+    listPaneHeight = gameHeight;
+    listPaneWidth = .2 * gameWidth;
+    listPaneLeft = viewWidth;
+
+    let infoPaneWidth, infoPaneHeight, infoPaneTop;
+    infoPaneHeight = .2 * viewHeight;
+    infoPaneWidth = viewWidth;
+    infoPaneTop = viewHeight;
 
     let style = {
       width: gameWidth + 'px',
@@ -38,13 +63,28 @@ class Game extends Component {
   return (
       <div className="game" style={style}>
       <View
-        gameWidth = {gameWidth}
-        gameHeight = {gameHeight}
+        viewWidth = {gameWidth}
+        viewHeight = {gameHeight}
       />
-      <InfoPane
-        infoPaneHeight = {infoPaneHeight}
-        infoPaneWidth = {infoPaneWidth}
+      <Button
+        onClick={() => this.handleModeChange()}
+        modeBtnTop = {viewHeight - 30}
+        modeBtnLeft = {viewWidth -30 }
       />
+      { this.state.isInfoMode &&
+        <ListPane
+          listPaneHeight = {listPaneHeight}
+          listPaneWidth = {listPaneWidth}
+          listPaneLeft = {listPaneLeft}
+        />
+      }
+      { this.state.isInfoMode &&
+        <InfoPane
+          infoPaneHeight = {infoPaneHeight}
+          infoPaneWidth = {infoPaneWidth}
+          infoPaneTop = {infoPaneTop}
+        />
+      }
       </div>
     );
   }

@@ -17,8 +17,11 @@ body {
   background: #56e
 }
 
-.infoPane {
+.listPane {
   background: #72c
+}
+.infoPane {
+  background: #9c5
 }
 .btn {
   width: 20px;

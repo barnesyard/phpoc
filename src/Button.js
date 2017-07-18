@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import './index.css';
 
-var buttonStyle = {
-  margin: '5px 1px 1px 10px'
-};
+class Button extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-var Button = React.createClass({
-  render: function () {
+  render () {
+  let buttonStyle = {
+    position: 'absolute',
+    top: this.props.modeBtnTop + 'px',
+    left: this.props.modeBtnLeft + 'px',
+  };
+
     return (
       <button
         className="btn"
@@ -15,6 +20,6 @@ var Button = React.createClass({
         >i</button>
     );
   }
-});
+}
 
 export default Button;
