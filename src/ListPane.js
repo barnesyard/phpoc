@@ -9,7 +9,6 @@ class ListPane extends Component {
      height: this.props.listPaneHeight + 'px',
      top: '0px',
      left: this.props.listPaneLeft + 'px',
-     position: 'absolute',
     };
 
     return (

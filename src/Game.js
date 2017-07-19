@@ -70,6 +70,7 @@ class Game extends Component {
         onClick={() => this.handleModeChange()}
         modeBtnTop = {viewHeight - 30}
         modeBtnLeft = {viewWidth -30 }
+        btnLabel = "i"
       />
       { this.state.isInfoMode &&
         <ListPane

@@ -9,7 +9,6 @@ class InfoPane extends Component {
      height: this.props.infoPaneHeight + 'px',
      top: this.props.infoPaneTop + '0px',
      left: '0px',
-     position: 'absolute',
     };
 
     return (

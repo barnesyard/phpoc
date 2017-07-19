@@ -7,7 +7,6 @@ class Button extends Component {
 
   render () {
   let buttonStyle = {
-    position: 'absolute',
     top: this.props.modeBtnTop + 'px',
     left: this.props.modeBtnLeft + 'px',
   };
@@ -17,7 +16,7 @@ class Button extends Component {
         className="btn"
         style={buttonStyle}
         onClick={this.props.onClick}
-        >i</button>
+        >{this.props.btnLabel}</button>
     );
   }
 }
