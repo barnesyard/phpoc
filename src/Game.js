@@ -4,6 +4,7 @@ import View from './View.js';
 import InfoPane from './InfoPane.js';
 import ListPane from './ListPane.js';
 import Button from './Button.js';
+import PuzzleDiag from './PuzzleDiag.js';
 
 // The Game class contains all the UI the users will interact with. The view and the list pane and 
 // the info pane will all reside in the Game Div. The intent here it to have this div retain the 
@@ -14,6 +15,7 @@ class Game extends Component {
     super(props);
     this.state = {
       isInfoMode: true,
+      renderPuzzle: false,
     };
   }
 
@@ -21,6 +23,23 @@ class Game extends Component {
     this.setState({
       isInfoMode: !this.state.isInfoMode,
     });
+  }
+
+  showPuzzle() {
+    //alert("clicked from game!");
+    this.setState({
+      renderPuzzle: true,
+    });
+  }
+
+  handleGameClick() {
+    //alert("game clicked!");
+    //check to see if the mouse cursor is outside the box.
+    if (this.state.renderPuzzle) {
+      this.setState({
+        renderPuzzle: false,
+      })
+    }
   }
 
   render() {
@@ -54,6 +73,10 @@ class Game extends Component {
     infoPaneWidth = viewWidth;
     infoPaneTop = viewHeight;
 
+    let puzzDiagLeft, puzzDiagWidth;
+      puzzDiagLeft = .1 * gameWidth;
+      puzzDiagWidth = .8 * gameWidth; 
+
     let style = {
       width: gameWidth + 'px',
       height: gameHeight + 'px',
@@ -61,10 +84,13 @@ class Game extends Component {
     };
 
   return (
-      <div className="game" style={style}>
+      <div className="game" 
+        onClick={() => this.handleGameClick()}
+        style={style}>
       <View
         viewWidth = {viewWidth}
         viewHeight = {viewHeight}
+        showPuzzle = {() => this.showPuzzle()}
       />
       <Button
         onClick={() => this.handleModeChange()}
@@ -84,6 +110,12 @@ class Game extends Component {
           infoPaneHeight = {infoPaneHeight}
           infoPaneWidth = {infoPaneWidth}
           infoPaneTop = {infoPaneTop}
+        />
+      }
+      { this.state.renderPuzzle &&
+        <PuzzleDiag
+          puzzDiagLeft = {puzzDiagLeft}
+          puzzDiagWidth = {puzzDiagWidth}
         />
       }
       </div>

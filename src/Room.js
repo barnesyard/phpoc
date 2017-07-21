@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 class Room extends Component {
 
+    handleClick() {
+        this.props.showPuzzle();
+    }
+
     render() {
         let style = {
             width: this.props.viewWidth - 30 + 'px',
@@ -13,7 +17,8 @@ class Room extends Component {
         return (
             <div className="room" style={style}>
                 <svg>
-                    <circle cx={200} cy={100} r={40} fill="red" />
+                    <circle cx={250} cy={100} r={20} fill="red"
+                    onClick={() => this.handleClick()} />
                 </svg>
             </div>
         );

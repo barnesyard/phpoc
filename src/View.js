@@ -20,6 +20,7 @@ class View extends Component {
           currentRoom="one"
           viewHeight = {this.props.viewHeight}
           viewWidth = {this.props.viewWidth}
+          showPuzzle = {() => this.props.showPuzzle()}
         />
       </div>
     );

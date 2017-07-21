@@ -24,6 +24,11 @@ body {
   border-radius: 20px;
 }
 
+.puzzleDiag {
+  background: black;
+  position: absolute;
+}
+
 .listPane {
   background: #82c;
   position: absolute;
