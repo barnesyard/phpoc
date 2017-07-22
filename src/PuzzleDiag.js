@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import './index.css';
+import Pdf from './Pdf.js'
+import Viewer from './Pdf.js'
 
 class PuzzleDiag extends Component {
+  handleClick(e) {
+    console.log("No clicks allowed");
+    e.stopPropagation();
+  }
 
   render() {
    let style = {
@@ -11,7 +17,10 @@ class PuzzleDiag extends Component {
    };
 
   return (
-      <div className="puzzleDiag" style={style}>
+      <div className="puzzleDiag" style={style}
+        onClick={(event) => this.handleClick(event)}
+      >
+        <Pdf/>
       </div>
     );
   }

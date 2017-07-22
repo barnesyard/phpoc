@@ -27,6 +27,7 @@ body {
 .puzzleDiag {
   background: black;
   position: absolute;
+  border-radius: 8px;
 }
 
 .listPane {
