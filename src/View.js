@@ -9,10 +9,12 @@ class View extends Component {
   }
 
   render() {
-   let style = {
+    let scaleFactor = this.props.isInfoMode ? .8 : 1;
+    let style = {
      width: this.props.viewWidth + 'px',
      height: this.props.viewHeight + 'px',
-   };
+     zoom: scaleFactor,
+    };
 
   return (
       <div className="view" style={style}>
@@ -21,6 +23,7 @@ class View extends Component {
           viewHeight = {this.props.viewHeight}
           viewWidth = {this.props.viewWidth}
           showPuzzle = {() => this.props.showPuzzle()}
+          isInfoMode = {this.props.isInfoMode}
         />
       </div>
     );

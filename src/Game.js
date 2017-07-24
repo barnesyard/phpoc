@@ -42,6 +42,14 @@ class Game extends Component {
     }
   }
 
+  handleMoveViewRight () {
+    //do nothing right now
+  }
+
+  handleMoveViewLeft () {
+    //do nothing right now
+  }
+
   render() {
     let gameHeight, gameWidth;
     // Handle resizing so that the game div stays in a 16:9 ratio
@@ -88,15 +96,28 @@ class Game extends Component {
         onClick={() => this.handleGameClick()}
         style={style}>
       <View
-        viewWidth = {viewWidth}
-        viewHeight = {viewHeight}
+        viewWidth = {gameWidth}
+        viewHeight = {gameHeight}
         showPuzzle = {() => this.showPuzzle()}
+        isInfoMode = {this.state.isInfoMode}
       />
       <Button
         onClick={() => this.handleModeChange()}
         modeBtnTop = {viewHeight - 30}
         modeBtnLeft = {viewWidth -30 }
         btnLabel = "i"
+      />
+      <Button
+        onClick={() => this.handleMoveViewRight()}
+        modeBtnTop = {viewHeight / 2}
+        modeBtnLeft = {viewWidth -30 }
+        btnLabel = ">"
+      />
+      <Button
+        onClick={() => this.handleMoveViewLeft()}
+        modeBtnTop = {viewHeight / 2}
+        modeBtnLeft = { 10 }
+        btnLabel = "<"
       />
       { this.state.isInfoMode &&
         <ListPane
@@ -116,6 +137,7 @@ class Game extends Component {
         <PuzzleDiag
           puzzDiagLeft = {puzzDiagLeft}
           puzzDiagWidth = {puzzDiagWidth}
+          puzzDiagHeight = {gameHeight}
         />
       }
       </div>

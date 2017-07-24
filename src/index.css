@@ -25,7 +25,7 @@ body {
 }
 
 .puzzleDiag {
-  background: black;
+  background: #3E3E3E;
   position: absolute;
   border-radius: 8px;
 }
@@ -34,12 +34,17 @@ body {
   background: #82c;
   position: absolute;
 }
+
 .infoPane {
   background: #9c5;
   position: absolute;
 }
+
 .btn {
   position: absolute;
   width: 20px;
   height: 20px;
+}
+
+.pdf-viewer {
 }

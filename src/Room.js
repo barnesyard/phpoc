@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { roomdata } from './roomdata.js';
 
 class Room extends Component {
 
@@ -7,6 +8,9 @@ class Room extends Component {
     }
 
     render() {
+        let color = "lime";
+        let itemLeft = 250;
+        let itemTop = 80;
         let style = {
             width: this.props.viewWidth - 30 + 'px',
             height: this.props.viewHeight - 30 + 'px',
@@ -14,15 +18,21 @@ class Room extends Component {
             left: '15px',
         };
 
+        let allRooms = roomdata(() => this.handleClick());
+        let room = allRooms[0]; // todo: more robust room-finding algorithm
+
         return (
             <div className="room" style={style}>
-                <svg>
-                    <circle cx={250} cy={100} r={20} fill="red"
-                    onClick={() => this.handleClick()} />
+                <svg width={this.props.viewWidth}>
+                    {room.items.map(item => item.svg)}
                 </svg>
             </div>
         );
     }
+}
+
+class RoomItem extends Component {
+
 }
 
 export default Room;
