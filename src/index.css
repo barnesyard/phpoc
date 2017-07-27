@@ -15,7 +15,7 @@ body {
 
 .view {
   background: #56e;
-  position: absolute;
+  position: relative;
 }
 
 .room {
@@ -25,9 +25,9 @@ body {
 }
 
 .puzzleDiag {
-  background: #3E3E3E;
+  background-color: rgba(70, 70, 70, .9);
   position: absolute;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .listPane {
@@ -42,8 +42,10 @@ body {
 
 .btn {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: transparent;
 }
 
 .pdf-viewer {

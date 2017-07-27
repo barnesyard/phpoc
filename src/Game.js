@@ -13,9 +13,20 @@ class Game extends Component {
 
   constructor(props) {
     super(props);
+
+    if ((this.props.appWidth / this.props.appHeight) > 16 / 9 ) {
+      this.origWidth = this.props.appHeight / 9 * 16;
+      this.origHeight = this.props.appHeight;
+    } else {
+      this.origHeight = this.props.appWidth / 16 * 9;
+      this.origWidth = this.props.appWidth;
+    }
+
     this.state = {
-      isInfoMode: true,
+      isInfoMode: false,
       renderPuzzle: false,
+      origWidth: this.props.appWidth,
+      origHeight: this.props.appHeight,
     };
   }
 
@@ -25,11 +36,12 @@ class Game extends Component {
     });
   }
 
-  showPuzzle() {
+  showPuzzle(puzzle) {
     //alert("clicked from game!");
     this.setState({
       renderPuzzle: true,
     });
+    this.puzzle = puzzle;
   }
 
   handleGameClick() {
@@ -48,10 +60,11 @@ class Game extends Component {
 
   handleMoveViewLeft () {
     //do nothing right now
+    console.log("The scale factor" + this.scaleFactor)
   }
 
   render() {
-    let gameHeight, gameWidth;
+    let gameHeight, gameWidth, scaleFactor;
     // Handle resizing so that the game div stays in a 16:9 ratio
     if ((this.props.appWidth / this.props.appHeight) > 16 / 9 ) {
       gameWidth = this.props.appHeight / 9 * 16;
@@ -60,6 +73,7 @@ class Game extends Component {
       gameHeight = this.props.appWidth / 16 * 9;
       gameWidth = this.props.appWidth;
     }
+    scaleFactor = gameHeight / this.origHeight;
 
     // Let the Game object manage the size of the divs that are its children
     let viewWidth, viewHeight;
@@ -100,17 +114,18 @@ class Game extends Component {
         viewHeight = {gameHeight}
         showPuzzle = {() => this.showPuzzle()}
         isInfoMode = {this.state.isInfoMode}
+        scaleFactor = {scaleFactor}
       />
       <Button
         onClick={() => this.handleModeChange()}
-        modeBtnTop = {viewHeight - 30}
-        modeBtnLeft = {viewWidth -30 }
+        modeBtnTop = {viewHeight - 70}
+        modeBtnLeft = {viewWidth -70 }
         btnLabel = "i"
       />
       <Button
         onClick={() => this.handleMoveViewRight()}
         modeBtnTop = {viewHeight / 2}
-        modeBtnLeft = {viewWidth -30 }
+        modeBtnLeft = {viewWidth -40 }
         btnLabel = ">"
       />
       <Button
@@ -138,6 +153,7 @@ class Game extends Component {
           puzzDiagLeft = {puzzDiagLeft}
           puzzDiagWidth = {puzzDiagWidth}
           puzzDiagHeight = {gameHeight}
+          puzzle = {this.puzzle}
         />
       }
       </div>

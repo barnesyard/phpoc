@@ -6,25 +6,41 @@ const  roomdata = clickHandler => [
     "background": "#da7",
     "items": [
       {
-        "svg": <circle cx={40} cy={30} r={25} fill="red" onClick={clickHandler} />,
-        "name": "ceilinglight",
-        "top" : 10,
-        "left": 20,
+        "svg": <circle cx={25} cy={25} r={25} fill="purple" />,
+        "name": "ceilingLight",
+        "puzzle": "traceMonkey",
+        "requiredItems": ["hose", "nozzle"],
+        "isHidden": false,
       },
       {
-        "svg": <circle cx={300} cy={120} r={25} fill="blue" onClick={clickHandler} />,
-        "name": "otherlight",
-        "top" : 10,
-        "left": 20,
+        "svg": <circle cx={25} cy={25} r={25} fill="yellow" />,
+        "name": "pillow",
+        "puzzle": "",
+        "requiredItems": [],
+        "isHidden": false,
+        "top": "5%",
+        "left": "43%",
       },
       {
-        "svg": <symbol width="1em" height="1em" viewBox="0 0 32 32">
-               <path d="M4 10v20c0 1.1 0.9 2 2 2h18c1.1 0 2-0.9 2-2v-20h-22zM10 28h-2v-14h2v14zM14 28h-2v-14h2v14zM18 28h-2v-14h2v14zM22 28h-2v-14h2v14z"></path>
+        "svg": <g>
+               <path className="path1" d="M4 10v20c0 1.1 0.9 2 2 2h18c1.1 0 2-0.9 2-2v-20h-22zM10 28h-2v-14h2v14zM14 28h-2v-14h2v14zM18 28h-2v-14h2v14zM22 28h-2v-14h2v14z"></path>
                <path d="M26.5 4h-6.5v-2.5c0-0.825-0.675-1.5-1.5-1.5h-7c-0.825 0-1.5 0.675-1.5 1.5v2.5h-6.5c-0.825 0-1.5 0.675-1.5 1.5v2.5h26v-2.5c0-0.825-0.675-1.5-1.5-1.5zM18 4h-6v-1.975h6v1.975z"></path>
-               </symbol>,
-        "name": "ceilinglight",
-        "top" : 10,
-        "left": 20,
+               </g>,
+        "name": "trashCan",
+        "puzzle": "traceMonkey",
+        "requiredItems": [],
+        "isHidden": false,
+        "top": "80%",
+        "left": "80%",
+      },
+      {
+        "svg": <rect x="0" y="0" width="100%" height="100%" fill="purple" />,
+        "name": "bed",
+        "puzzle": "traceMonkey",
+        "requiredItems": [],
+        "isHidden": false,
+        "top": "40%",
+        "left": "66%",
       },
     ]
   }

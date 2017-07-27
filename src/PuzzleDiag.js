@@ -30,8 +30,9 @@ class PuzzleDiag extends Component {
     //TODO add to the list of open puzzles
   }
 
-  onDocumentLoad ({total}) {
-    this.setState ({total});
+  onDocumentLoad (total) {
+    console.log("The PDF Loaded")
+    this.setState ({total: total});
   }
 
   onPageLoad({ pageIndex, pageNumber }) {
@@ -40,27 +41,23 @@ class PuzzleDiag extends Component {
 
 
   render() {
-   let style = {
+
+    let vertPdfScale = .8; // we want the PDF to be 0.8* height of the puzzle dialog
+    let pdfWidth = ((8.5 * vertPdfScale * this.props.puzzDiagHeight ) / 11); //assuming the PDF pages are all 8.5x11
+    let style = {
      width: this.props.puzzDiagWidth + 'px',
      height: this.props.puzzDiagHeight,
      left: this.props.puzzDiagLeft,
    };
 
    let pdfStyle = {
-     top: 30 + 'px',
-     left: 30 + 'px',
+     top: 50 + 'px',
      position: 'relative',
-     background: 'lime',
-     width: '55%',
+     background: 'transparent',
+     width: pdfWidth + 'px',
+     float: 'right',
+     right: 60 + 'px'
    };
-
-  // return (
-  //     <div className="puzzleDiag" style={style}
-  //       onClick={(event) => this.handleClick(event)}>
-  //       <Pdf puzzDiagHeight = {this.props.puzzDiagHeight}/>
-  //     </div>
-  //   );
-  // }
 
   let file = './../assets/Mute.pdf';
   let filewww = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
@@ -70,13 +67,13 @@ class PuzzleDiag extends Component {
         <Button
           onClick={() => this.handlePrint()}
           modeBtnTop = {10}
-          modeBtnLeft = {this.props.puzzDiagWidth - 110 }
+          modeBtnLeft = {this.props.puzzDiagWidth - 150 }
           btnLabel = "P"
         />
         <Button
           onClick={() => this.handleDownload()}
           modeBtnTop = {10}
-          modeBtnLeft = {this.props.puzzDiagWidth - 70 }
+          modeBtnLeft = {this.props.puzzDiagWidth - 100 }
           btnLabel = "D"
         />
         <Button
@@ -88,12 +85,13 @@ class PuzzleDiag extends Component {
         <div className="pdf-viewer" style={pdfStyle}>
           <ReactPDF
             file={filewww}
-            onDocumentLoad={() => this.onDocumentLoad}
+            onDocumentLoad={({total}) => this.onDocumentLoad(total)}
             onPageLoad={() => this.onPageLoad}
             error="Hey bitches, there was an error!"
             onDocumentError={({ message }) => alert('Error while loading document! ' + message)}
-            scale={.8}
+            width = {pdfWidth}
             />
+            Total Pages: {this.state.total}
           </div>
       </div>
     );
