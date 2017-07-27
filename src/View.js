@@ -6,6 +6,7 @@ import RoomItem from './RoomItem.js';
 class View extends Component {
 
   showPuzzle(puzzle) {
+    console.log("The rootitem object called the view with this: " + puzzle);
     this.props.showPuzzle(puzzle);
   }
 
@@ -19,10 +20,9 @@ render() {
      zoom: scaleFactor,
     };
 
-    let allRooms = roomdata(() => this.handleClick());
-    let room = allRooms[0]; 
+    let allRooms = roomdata;
     let roomItems = [];
-    room.items.forEach((roomItem) => {
+    allRooms[0].items.forEach((roomItem) => {
       roomItems.push(
         <RoomItem
           showPuzzle={(puzzle) => this.showPuzzle(puzzle)}

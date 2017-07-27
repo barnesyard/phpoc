@@ -15,7 +15,7 @@ body {
 
 .view {
   background: #56e;
-  position: relative;
+  position: absolute;
 }
 
 .room {

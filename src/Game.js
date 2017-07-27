@@ -112,7 +112,7 @@ class Game extends Component {
       <View
         viewWidth = {gameWidth}
         viewHeight = {gameHeight}
-        showPuzzle = {() => this.showPuzzle()}
+        showPuzzle = {(puzzle) => this.showPuzzle(puzzle)}
         isInfoMode = {this.state.isInfoMode}
         scaleFactor = {scaleFactor}
       />

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const  roomdata = clickHandler => [
+const  roomdata = [
   {
     "name": "Bedroom",
     "background": "#da7",
@@ -36,7 +36,7 @@ const  roomdata = clickHandler => [
       {
         "svg": <rect x="0" y="0" width="100%" height="100%" fill="purple" />,
         "name": "bed",
-        "puzzle": "traceMonkey",
+        "puzzle": "Test Monkey",
         "requiredItems": [],
         "isHidden": false,
         "top": "40%",

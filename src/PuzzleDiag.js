@@ -2,18 +2,26 @@ import React, { Component } from 'react';
 import './index.css';
 import Button from './Button.js'
 import ReactPDF from 'react-pdf'
-//import ReactPDF from 'react-pdf/build/entry.webpack'
+import { puzzledata } from './puzzledata.js';
 
 class PuzzleDiag extends Component {
   
-    state = {
-    file: './sample.pdf',
-    pageIndex: null,
-    pageNumber: null,
-    total: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      puzzleData: [],
+      pageIndex: null,
+      pageNumber: null,
+      total: null,
+      stuff: null,
+    };
+  }
+  
+  componentDidMount() {
+    this.setState({puzzleData: puzzledata});
   }
 
-  handleClick(e) {
+    handleClick(e) {
     console.log("No clicks allowed");
     e.stopPropagation();
   }
@@ -30,17 +38,28 @@ class PuzzleDiag extends Component {
     //TODO add to the list of open puzzles
   }
 
-  onDocumentLoad (total) {
+  onPdfDocumentLoad (total) {
     console.log("The PDF Loaded")
     this.setState ({total: total});
   }
 
-  onPageLoad({ pageIndex, pageNumber }) {
+  onPdfPageLoad({ pageIndex, pageNumber }) {
     this.setState({ pageIndex, pageNumber });
   }
 
 
   render() {
+
+    //let pdfFile = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
+    let pdfFile;
+    //We were passed the puzzle title from the roomItem so use that to get the puzzle info
+    this.state.puzzleData.forEach((puzzle) => {
+        console.log("Checking for matching puzzle " + puzzle.title + "to match this: " + this.props.puzzle);
+        if (puzzle.title === this.props.puzzle) {
+          pdfFile = puzzle.pdf;
+        }
+    })
+
 
     let vertPdfScale = .8; // we want the PDF to be 0.8* height of the puzzle dialog
     let pdfWidth = ((8.5 * vertPdfScale * this.props.puzzDiagHeight ) / 11); //assuming the PDF pages are all 8.5x11
@@ -59,8 +78,6 @@ class PuzzleDiag extends Component {
      right: 60 + 'px'
    };
 
-  let file = './../assets/Mute.pdf';
-  let filewww = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
   return (
       <div className="puzzleDiag" style={style}
         onClick={(event) => this.handleClick(event)}>
@@ -84,14 +101,14 @@ class PuzzleDiag extends Component {
         />
         <div className="pdf-viewer" style={pdfStyle}>
           <ReactPDF
-            file={filewww}
-            onDocumentLoad={({total}) => this.onDocumentLoad(total)}
-            onPageLoad={() => this.onPageLoad}
+            file={pdfFile}
+            onDocumentLoad={({total}) => this.onPdfDocumentLoad(total)}
+            onPageLoad={() => this.onPdfPageLoad}
             error="Hey bitches, there was an error!"
             onDocumentError={({ message }) => alert('Error while loading document! ' + message)}
             width = {pdfWidth}
-            />
-            Total Pages: {this.state.total}
+          />
+          Total Pages: {this.state.total}
           </div>
       </div>
     );
