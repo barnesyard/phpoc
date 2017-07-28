@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './index.css';
 
-class RoomItem extends Component {
+class ViewItem extends Component {
 
 handleClick() {
   // There will be decorative objects that won't be clickable. Those won't have a puzzle.
   if (this.props.puzzle !== "") {
-    console.log("The click of an item occurred. The puzzle for it is: " + this.props.puzzle);
+    console.log("The click of an roomItem occurred. The puzzle for it is: " + this.props.puzzle);
     // Some puzzles may require an object before the itme is clickable, check for those first.
     // call a methond to getActiveItems() that will query from the info pane or the list pane the currently active objects.
     this.props.showPuzzle(this.props.puzzle);
@@ -45,4 +45,4 @@ render() {
   }
 }
 
-export default RoomItem;
+export default ViewItem;

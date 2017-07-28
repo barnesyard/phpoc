@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './index.css';
-import View from './View.js';
+import Room from './Room.js';
 import InfoPane from './InfoPane.js';
 import ListPane from './ListPane.js';
 import Button from './Button.js';
@@ -109,7 +109,7 @@ class Game extends Component {
       <div className="game" 
         onClick={() => this.handleGameClick()}
         style={style}>
-      <View
+      <Room
         viewWidth = {gameWidth}
         viewHeight = {gameHeight}
         showPuzzle = {(puzzle) => this.showPuzzle(puzzle)}

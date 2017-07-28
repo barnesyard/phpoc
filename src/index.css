@@ -19,9 +19,8 @@ body {
 }
 
 .room {
-  background: #8cf;
+  background: #56e;
   position: absolute;
-  border-radius: 20px;
 }
 
 .puzzleDiag {

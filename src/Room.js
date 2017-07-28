@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './index.css';
-import { roomdata } from './roomdata.js';
-import RoomItem from './RoomItem.js';
+import { viewdata } from './viewdata.js';
+import ViewItem from './ViewItem.js';
 
-class View extends Component {
+class Room extends Component {
 
   showPuzzle(puzzle) {
     console.log("The rootitem object called the view with this: " + puzzle);
@@ -20,29 +20,29 @@ render() {
      zoom: scaleFactor,
     };
 
-    let allRooms = roomdata;
-    let roomItems = [];
-    allRooms[0].items.forEach((roomItem) => {
-      roomItems.push(
-        <RoomItem
+    let allViews = viewdata;
+    let viewItems = [];
+    allViews[0].items.forEach((viewItem) => {
+      viewItems.push(
+        <ViewItem
           showPuzzle={(puzzle) => this.showPuzzle(puzzle)}
           viewHeight={this.props.viewHeight}
           viewWidth={this.props.viewWidth}
-          svg={roomItem.svg}
-          name={roomItem.name}
-          isHidden={roomItem.isHidden}
-          puzzle={roomItem.puzzle}
-          top={roomItem.top}
-          left={roomItem.left}
-          requiredItems={roomItem.requiredItems}/>) 
+          svg={viewItem.svg}
+          name={viewItem.name}
+          isHidden={viewItem.isHidden}
+          puzzle={viewItem.puzzle}
+          top={viewItem.top}
+          left={viewItem.left}
+          requiredItems={viewItem.requiredItems}/>) 
     })
     
   return (
-      <div className="view" style={style}>
-        {roomItems}
+      <div className="room" style={style}>
+        {viewItems}
       </div>
     );
   }
 }
 
-export default View;
+export default Room;
