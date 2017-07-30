@@ -4,12 +4,11 @@ import './index.css';
 class ViewItem extends Component {
 
 handleClick() {
-  // There will be decorative objects that won't be clickable. Those won't have a puzzle.
+  // There will be decorative objects that won't be clickable. Those won't have a puzzle associated with them.
   if (this.props.puzzle !== "") {
-    console.log("The click of an roomItem occurred. The puzzle for it is: " + this.props.puzzle);
-    // Some puzzles may require an object before the itme is clickable, check for those first.
-    // call a methond to getActiveItems() that will query from the info pane or the list pane the currently active objects.
-    this.props.showPuzzle(this.props.puzzle);
+    // Some puzzles may require an object before the itme is clickable. Since we are passing
+    // the puzzle name to the game object that has access to object list data handle that there.
+    this.props.showPuzzle(this.props.puzzle, this.props.requiredItems);
   }
 }
 
@@ -31,12 +30,13 @@ render() {
     };
 
     // This viewBox is part of the key to controlling the size of SVG code. I will leave here for now even though it does nothing.
-    var viewBox = [0, 0, 50, 50];
-    
+    //var viewBox = [0, 0, 100, 100];
+    // put this in the <svg> element when you are read to experiment viewBox={viewBox}
+
   return (
       <div className={this.props.name} style={style} >
         {!this.props.isHidden &&
-          <svg onClick={() => this.handleClick()} viewbox={viewBox} >
+          <svg onClick={() => this.handleClick()} >
             {this.props.svg}
           </svg>
         }

@@ -8,8 +8,8 @@ const  viewdata = [
       {
         "svg": <circle cx={25} cy={25} r={25} fill="purple" />,
         "name": "ceilingLight",
-        "puzzle": "traceMonkey",
-        "requiredItems": ["hose", "nozzle"],
+        "puzzle": "Mute",
+        "requiredItems": ["nozzle", "hose"],
         "isHidden": false,
       },
       {
@@ -28,7 +28,7 @@ const  viewdata = [
                </g>,
         "name": "trashCan",
         "puzzle": "traceMonkey",
-        "requiredItems": [],
+        "requiredItems": ["hose", "nozzle"],
         "isHidden": false,
         "top": "80%",
         "left": "80%",

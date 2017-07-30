@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './index.css';
-import Room from './Room.js';
-import InfoPane from './InfoPane.js';
+import ViewPane from './ViewPane.js';
+import PiecesPane from './PiecesPane.js';
 import ListPane from './ListPane.js';
 import Button from './Button.js';
 import PuzzleDiag from './PuzzleDiag.js';
@@ -14,6 +14,7 @@ class Game extends Component {
   constructor(props) {
     super(props);
 
+    //store the original height and width of the window to create a scaling factor
     if ((this.props.appWidth / this.props.appHeight) > 16 / 9 ) {
       this.origWidth = this.props.appHeight / 9 * 16;
       this.origHeight = this.props.appHeight;
@@ -29,24 +30,44 @@ class Game extends Component {
       origHeight: this.props.appHeight,
     };
   }
-
+  
   handleModeChange() {
     this.setState({
       isInfoMode: !this.state.isInfoMode,
     });
   }
 
-  showPuzzle(puzzle) {
-    //alert("clicked from game!");
-    this.setState({
-      renderPuzzle: true,
-    });
-    this.puzzle = puzzle;
+  // When a room item is click and there is a puzzle in it we will show a puzzle dialog with the PDF
+  showPuzzle(puzzle, requiredItems) {
+    this.updateActivePieces(requiredItems);
+    if (this.arraysAreEqual(requiredItems.sort(), this.pieces.sort())) {
+      this.setState({
+        renderPuzzle: true,
+      });
+      this.puzzle = puzzle;
+    }
   }
 
+  arraysAreEqual(x, y) {
+  if (x.length !== y.length) {
+    return false;
+  }
+  for (let i = 0; i < x.length; i++) {
+    if (x[i] !== y[i]) {
+      return false;
+    }
+  }
+    return true;
+  }
+
+  // This is a temp method that will be replaced by a call from a Piece obj in the PiecesPane
+  updateActivePieces(pieces) {
+    console.log("setting active pieces to :" + pieces);
+    this.pieces = pieces;
+  }
+
+  // Clicking on the game obj will dismiss puzzle dialog. Maybe make it so the "X" must be clicked?
   handleGameClick() {
-    //alert("game clicked!");
-    //check to see if the mouse cursor is outside the box.
     if (this.state.renderPuzzle) {
       this.setState({
         renderPuzzle: false,
@@ -109,10 +130,10 @@ class Game extends Component {
       <div className="game" 
         onClick={() => this.handleGameClick()}
         style={style}>
-      <Room
+      <ViewPane
         viewWidth = {gameWidth}
         viewHeight = {gameHeight}
-        showPuzzle = {(puzzle) => this.showPuzzle(puzzle)}
+        showPuzzle = {(puzzle, requiredItems) => this.showPuzzle(puzzle, requiredItems)}
         isInfoMode = {this.state.isInfoMode}
         scaleFactor = {scaleFactor}
       />
@@ -142,7 +163,7 @@ class Game extends Component {
         />
       }
       { this.state.isInfoMode &&
-        <InfoPane
+        <PiecesPane
           infoPaneHeight = {infoPaneHeight}
           infoPaneWidth = {infoPaneWidth}
           infoPaneTop = {infoPaneTop}

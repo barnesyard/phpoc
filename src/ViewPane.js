@@ -3,11 +3,10 @@ import './index.css';
 import { viewdata } from './viewdata.js';
 import ViewItem from './ViewItem.js';
 
-class Room extends Component {
+class ViewPane extends Component {
 
-  showPuzzle(puzzle) {
-    console.log("The rootitem object called the view with this: " + puzzle);
-    this.props.showPuzzle(puzzle);
+  showPuzzle(puzzle, requiredItems) {
+    this.props.showPuzzle(puzzle, requiredItems);
   }
 
 render() {
@@ -25,7 +24,7 @@ render() {
     allViews[0].items.forEach((viewItem) => {
       viewItems.push(
         <ViewItem
-          showPuzzle={(puzzle) => this.showPuzzle(puzzle)}
+          showPuzzle={(puzzle, requiredItems) => this.showPuzzle(puzzle, requiredItems)}
           viewHeight={this.props.viewHeight}
           viewWidth={this.props.viewWidth}
           svg={viewItem.svg}
@@ -34,15 +33,16 @@ render() {
           puzzle={viewItem.puzzle}
           top={viewItem.top}
           left={viewItem.left}
-          requiredItems={viewItem.requiredItems}/>) 
+          requiredItems={viewItem.requiredItems}
+          key={viewItem.name}/>) 
     })
     
   return (
-      <div className="room" style={style}>
+      <div className="viewpane" style={style}>
         {viewItems}
       </div>
     );
   }
 }
 
-export default Room;
+export default ViewPane;

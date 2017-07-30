@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './index.css';
 
-class InfoPane extends Component {
+class PiecesPane extends Component {
   
   render() {
     let style = {
@@ -12,10 +12,10 @@ class InfoPane extends Component {
     };
 
     return (
-      <div className="infoPane" style={style}>
+      <div className="piecesPane" style={style}>
       </div>
     );
   }
 }
 
-export default InfoPane;
+export default PiecesPane;
