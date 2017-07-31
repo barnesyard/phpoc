@@ -33,12 +33,8 @@ class PuzzleDiag extends Component {
     e.stopPropagation();
   }
 
-  handlePrint() {
-    // Todo: print the PDF
-  }
-
-  handleDownload() {
-    // Todo: download the PDF
+  handleOpenPdf() {
+    window.open(this.puzzle.pdf);
   }
 
   handleClose() {
@@ -91,25 +87,19 @@ class PuzzleDiag extends Component {
         <AnswerForm submitGuess={(submission) => this.submitGuess(submission)}/>
         <PuzzleAnswer puzzle={this.puzzle}/>
         <SubmittedGuesses submissions={this.puzzle.guesses}/>
-        <Button key="printButton"
-          onClick={() => this.handlePrint()}
-          modeBtnTop={10}
-          modeBtnLeft={this.props.puzzDiagWidth - 150 }
-          btnLabel="P"
-        />
-        <Button key="downloadButton"
-          onClick={() => this.handleDownload()}
+        <Button key="openPdfButton"
+          onClick={() => this.handleOpenPdf()}
           modeBtnTop={10}
           modeBtnLeft={this.props.puzzDiagWidth - 100 }
-          btnLabel="D"
+          btnLabel="^"
         />
         <Button key="closeButton"
           onClick={() => this.handleClose()}
           modeBtnTop={10}
           modeBtnLeft={this.props.puzzDiagWidth - 40 }
-          btnLabel="->"
+          btnLabel="X"
         />
-        <div className="pdfViewer" style={pdfStyle}>
+        <div className="pdfViewer" style={pdfStyle} onClick={() => this.handleOpenPdf()}>
           <ReactPDF
             file={this.puzzle.pdf}
             onDocumentLoad={({total}) => this.onPdfDocumentLoad(total)}
