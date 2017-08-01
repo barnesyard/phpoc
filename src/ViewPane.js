@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './index.css';
-import { viewdata } from './viewdata.js';
 import ViewItem from './ViewItem.js';
 
 class ViewPane extends Component {
@@ -15,7 +14,7 @@ class ViewPane extends Component {
      zoom: scaleFactor,
     };
 
-    let allViews = viewdata;
+    let allViews = this.props.viewData;
     let viewItems = [];
     allViews[0].items.forEach((viewItem) => {
       viewItems.push(

@@ -6,10 +6,16 @@
 // to the users (it's likely the last two will share a single implementation).
 
 import { puzzleData } from './puzzledata.js';
+import { viewData } from './viewdata.js';
 
 class FakeDatabase {
   constructor() {
     this.puzzleData = puzzleData;
+    this.viewData = viewData;
+  }
+
+  getViewData() {
+    return this.viewData;
   }
 
   // TODO: have this set the initial state of the puzzle inventory

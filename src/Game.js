@@ -131,6 +131,7 @@ class Game extends Component {
         onClick={() => this.handleGameClick()}
         style={style}>
       <ViewPane
+        viewData = {this.db.getViewData()}
         viewWidth = {gameWidth}
         viewHeight = {gameHeight}
         showPuzzleIfAllowed ={(puzzleId) => this.showPuzzleIfAllowed(puzzleId /* FIXME PASS ITEMS */)}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const  viewdata = [
+const viewData = [
   {
     "name": "Bedroom",
     "background": "#da7",
@@ -46,4 +46,4 @@ const  viewdata = [
   }
 ];
 
-export {viewdata};
+export { viewData };
