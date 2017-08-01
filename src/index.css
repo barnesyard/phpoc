@@ -91,6 +91,10 @@ body {
   overflow: auto;
   font-style: italic;
 }
+.answerForm {
+    top: 10px;
+    left: 10px;
+}
 .answerBox{
   position: relative;
   width: 350px;

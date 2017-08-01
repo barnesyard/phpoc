@@ -84,35 +84,22 @@ class PuzzleDiag extends Component {
   }
 }
 
-export default PuzzleDiag;
-
 class AnswerForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
 
   handleSubmit(event) {
-    // Pass the submission back up to the Puzzle diag object where we will check the answer
-    // Assuming that the PuzzleDiag object will interact with the server code to get the list 
-    // of the current puzzles and check for correct answers.
-    this.props.submitGuess(this.state.value);
     event.preventDefault();
+
+    const input = document.getElementById("guessInput");
+    this.props.submitGuess(input.value);
+    input.value = "";
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} style={{top: '10px', left: '10px'}}>
+      <form class="answerForm" onSubmit={e => this.handleSubmit(e)}>
         <input className="btnSubmit" type="submit" value="Submit" />
         <label className="txtInputLabel" >
-          <input className="txtInput" type="text" value={this.state.value} onChange={this.handleChange} />
+          <input id="guessInput" className="txtInput" type="text" />
         </label>
       </form>
     );
@@ -152,3 +139,8 @@ class PuzzleAnswer extends React.Component {
     );
   }
 }
+
+
+
+
+export default PuzzleDiag;
