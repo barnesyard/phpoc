@@ -53,9 +53,9 @@ class PuzzleDiag extends Component {
     return (
       <div className="puzzleDiag" style={style}
         onClick={(event) => this.handleClick(event)}>
-        <AnswerForm submitGuess={(submission) => this.props.submitGuess(this.props.puzzle.title, submission)}/>
+        <AnswerForm submitGuess={guess => this.props.submitGuess(this.props.puzzle.title, guess)}/>
         <PuzzleAnswer puzzle={this.props.puzzle}/>
-        <SubmittedGuesses submissions={this.props.puzzle.guesses}/>
+        <SubmittedGuesses guesses={this.props.puzzle.guesses}/>
         <Button key="openPdfButton"
           onClick={() => this.handleOpenPdf()}
           modeBtnTop={10}
@@ -121,15 +121,15 @@ class AnswerForm extends React.Component {
 
 class SubmittedGuesses extends React.Component {
   render() {
-    let submissionList = this.props.submissions.map((submission) => <li>{submission}</li>);
-  
     return (
-      <div className="submissions">
-        <div className="submissionsLabel">
+      <div className="guesses">
+        <div className="guessesLabel">
           Submission History
         </div>
-        <div className="submissionsList">
-          <ul>{submissionList}</ul>
+        <div className="guessesList">
+          <ul>
+            {this.props.guesses.map(g => <li key={g}>{g}</li>)}
+          </ul>
         </div>
       </div>
     );
