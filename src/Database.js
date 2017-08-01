@@ -5,18 +5,11 @@
 // a way to sync between users, and a way to push things from the hunt organizers
 // to the users (it's likely the last two will share a single implementation).
 
+import { puzzleData } from './puzzledata.js';
+
 class FakeDatabase {
   constructor() {
-    this.puzzleData = {
-      "Test Monkey": {
-        "title": "Test Monkey",
-        "pdf": "https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf",
-        "answer": "answer",
-        "arc": "emc",
-        "guesses": [],
-        "status": "open",
-      }
-    };
+    this.puzzleData = puzzleData;
   }
 
   // TODO: have this set the initial state of the puzzle inventory
