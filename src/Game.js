@@ -62,7 +62,7 @@ class Game extends Component {
     }
     puzzle.guesses.push(submission);
 
-    this.setState(oldState => ({ puzzles: { ...this.state.puzzles, [puzzleId]: puzzle }}));
+    this.setState(oldState => ({ puzzles: { ...this.oldState.puzzles, [puzzleId]: puzzle }}));
   }
 
   arraysAreEqual(x, y) {
