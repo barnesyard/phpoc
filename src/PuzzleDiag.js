@@ -36,41 +36,24 @@ class PuzzleDiag extends Component {
     this.setState({ pageIndex, pageNumber });
   }
 
-  submitGuess(submission) {
-    // Will need to call PH code to see if it is possible to make a submission
-    // TO DO: verify that it is possible to submit (maybe gray out textbox)
-
-    // This will be a call to the PH code but for now it will verify against the local data
-    // The call to the PH code will update the status of the puzzle
-    if(submission === this.props.puzzle.answer) {
-      // TODO: for the prototype update the status 
-      this.props.puzzle.status = "solved";
-    }
-
-    // TODO: figure out why this is not causing the list of submissions to render properly. When this
-    // comment was written the submissions list would not update but had been tested with harded coded
-    // array.
-    this.props.puzzle.guesses.push(submission);
-  }
-
   render() {
     let style = {
-     width: this.props.puzzDiagWidth + 'px',
-     height: this.props.puzzDiagHeight + 'px',
-     left: this.props.puzzDiagLeft,
-   };
+      width: this.props.puzzDiagWidth + 'px',
+      height: this.props.puzzDiagHeight + 'px',
+      left: this.props.puzzDiagLeft,
+    };
 
-   // we want the PDF to be 0.8* height of the puzzle dialog
-   //assuming the PDF pages are all 8.5x11 we can calculate the width we want
-   let pdfWidth = ( 0.8 * this.props.puzzDiagHeight * 8.5 / 11); 
-   let pdfStyle = {
+    // we want the PDF to be 0.8* height of the puzzle dialog
+    //assuming the PDF pages are all 8.5x11 we can calculate the width we want
+    let pdfWidth = ( 0.8 * this.props.puzzDiagHeight * 8.5 / 11); 
+    let pdfStyle = {
       width: pdfWidth + 'px',
-   };
+    };
 
-  return (
+    return (
       <div className="puzzleDiag" style={style}
         onClick={(event) => this.handleClick(event)}>
-        <AnswerForm submitGuess={(submission) => this.submitGuess(submission)}/>
+        <AnswerForm submitGuess={(submission) => this.props.submitGuess(this.props.puzzle.title, submission)}/>
         <PuzzleAnswer puzzle={this.props.puzzle}/>
         <SubmittedGuesses submissions={this.props.puzzle.guesses}/>
         <Button key="openPdfButton"
@@ -106,7 +89,7 @@ export default PuzzleDiag;
 class AnswerForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'Answer'};
+    this.state = {value: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -137,13 +120,7 @@ class AnswerForm extends React.Component {
 }
 
 class SubmittedGuesses extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    console.log("The list of submissions passed as prop: " + this.props.submissions);
-
     let submissionList = this.props.submissions.map((submission) => <li>{submission}</li>);
   
     return (

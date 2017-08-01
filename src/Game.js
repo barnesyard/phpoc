@@ -29,6 +29,7 @@ class Game extends Component {
       renderedPuzzle: null,
       origWidth: this.props.appWidth,
       origHeight: this.props.appHeight,
+      puzzles: puzzleData
     };
   }
   
@@ -43,9 +44,25 @@ class Game extends Component {
     this.updateActivePieces(requiredItems);
     if (this.arraysAreEqual(requiredItems.sort(), this.pieces.sort())) {
       this.setState({
-        renderedPuzzle: puzzleData[puzzle],
+        renderedPuzzle: this.state.puzzles[puzzle],
       });
     }
+  }
+
+  submitGuess(puzzleId, submission) {
+    // Will need to call PH code to see if it is possible to make a submission
+    // TO DO: verify that it is possible to submit (maybe gray out textbox)
+
+    // This will be a call to the PH code but for now it will verify against the local data
+    // The call to the PH code will update the status of the puzzle
+
+    let puzzle = this.state.puzzles[puzzleId];
+    if(submission === puzzle.answer) {
+      puzzle.status = "solved";
+    }
+    puzzle.guesses.push(submission);
+
+    this.setState(oldState => ({ puzzles: { ...this.state.puzzles, [puzzleId]: puzzle }}));
   }
 
   arraysAreEqual(x, y) {
@@ -174,6 +191,7 @@ class Game extends Component {
           puzzDiagLeft = {puzzDiagLeft}
           puzzDiagWidth = {puzzDiagWidth}
           puzzDiagHeight = {gameHeight}
+          submitGuess = {(puzzleId, submission) => this.submitGuess(puzzleId, submission)}
           puzzle = {this.state.renderedPuzzle}
         />
       }
