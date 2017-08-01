@@ -53,6 +53,7 @@ class PuzzleDiag extends Component {
     return (
       <div className="puzzleDiag" style={style}
         onClick={(event) => this.handleClick(event)}>
+        <div className="puzzleTitle">{this.props.puzzle.title}</div>
         <AnswerForm submitGuess={guess => this.props.submitGuess(this.props.puzzle.title, guess)}/>
         <PuzzleAnswer puzzle={this.props.puzzle}/>
         <SubmittedGuesses guesses={this.props.puzzle.guesses}/>

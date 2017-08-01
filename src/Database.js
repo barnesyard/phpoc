@@ -23,7 +23,7 @@ class FakeDatabase {
   // TODO: deal with selectedItems
   showPuzzleIfAllowed(puzzleId, selectedItems) {
     let puzzle = this.puzzleData[puzzleId];
-    if (puzzle.status !== "locked") {
+    if (puzzle && puzzle.status !== "locked") {
       return puzzle;
     } else {
       return null;

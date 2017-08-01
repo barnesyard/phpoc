@@ -27,7 +27,7 @@ const  viewdata = [
                <path d="M26.5 4h-6.5v-2.5c0-0.825-0.675-1.5-1.5-1.5h-7c-0.825 0-1.5 0.675-1.5 1.5v2.5h-6.5c-0.825 0-1.5 0.675-1.5 1.5v2.5h26v-2.5c0-0.825-0.675-1.5-1.5-1.5zM18 4h-6v-1.975h6v1.975z"></path>
                </g>,
         "name": "trashCan",
-        "puzzleTitle": "traceMonkey",
+        "puzzleTitle": "Azoth The Avenger Is a Friend of Mine",
         "requiredItems": ["hose", "nozzle"],
         "isHidden": false,
         "top": "80%",
