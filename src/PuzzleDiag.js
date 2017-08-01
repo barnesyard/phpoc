@@ -2,39 +2,25 @@ import React, { Component } from 'react';
 import './index.css';
 import Button from './Button.js'
 import ReactPDF from 'react-pdf'
-import { puzzledata } from './puzzledata.js';
 
 class PuzzleDiag extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
-      puzzleData: [],
       pageIndex: null,
       pageNumber: null,
       total: null,
       stuff: null,
-      puzzle: null,
     };
-
-    // The title of the puzzle (used ID?) is passed to this PuzzleDiag component. I am assuming that during the constructor
-    // we can call PH server code here to get PDF path, previous answer submissions, and possibly the lock state of the submission
-    // because there is a mechanism to block submissions if it is done too much.
-    puzzledata.forEach((puzzle) => {
-      if (puzzle.title === this.props.puzzle) {
-        this.puzzle = puzzle;
-        this.setState({puzzle: puzzle});
-      }
-    })
-
   }
 
-    handleClick(e) {
+  handleClick(e) {
     e.stopPropagation();
   }
 
   handleOpenPdf() {
-    window.open(this.puzzle.pdf);
+    window.open(this.props.puzzle.pdf);
   }
 
   handleClose() {
@@ -56,15 +42,15 @@ class PuzzleDiag extends Component {
 
     // This will be a call to the PH code but for now it will verify against the local data
     // The call to the PH code will update the status of the puzzle
-    if(submission === this.puzzle.answer) {
+    if(submission === this.props.puzzle.answer) {
       // TODO: for the prototype update the status 
-      this.puzzle.status = "solved";
+      this.props.puzzle.status = "solved";
     }
 
     // TODO: figure out why this is not causing the list of submissions to render properly. When this
     // comment was written the submissions list would not update but had been tested with harded coded
     // array.
-    this.puzzle.guesses.push(submission);
+    this.props.puzzle.guesses.push(submission);
   }
 
   render() {
@@ -85,8 +71,8 @@ class PuzzleDiag extends Component {
       <div className="puzzleDiag" style={style}
         onClick={(event) => this.handleClick(event)}>
         <AnswerForm submitGuess={(submission) => this.submitGuess(submission)}/>
-        <PuzzleAnswer puzzle={this.puzzle}/>
-        <SubmittedGuesses submissions={this.puzzle.guesses}/>
+        <PuzzleAnswer puzzle={this.props.puzzle}/>
+        <SubmittedGuesses submissions={this.props.puzzle.guesses}/>
         <Button key="openPdfButton"
           onClick={() => this.handleOpenPdf()}
           modeBtnTop={10}
@@ -101,7 +87,7 @@ class PuzzleDiag extends Component {
         />
         <div className="pdfViewer" style={pdfStyle} onClick={() => this.handleOpenPdf()}>
           <ReactPDF
-            file={this.puzzle.pdf}
+            file={this.props.puzzle.pdf}
             onDocumentLoad={({total}) => this.onPdfDocumentLoad(total)}
             onPageLoad={() => this.onPdfPageLoad}
             error="Hey bitches, there was an error!"
@@ -153,13 +139,11 @@ class AnswerForm extends React.Component {
 class SubmittedGuesses extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {submissions: this.props.submissions};
   }
 
   render() {
     console.log("The list of submissions passed as prop: " + this.props.submissions);
-    // When I try to use the state if doesn't work. Need to debug.
-    //let submissionList = this.state.submissions.map((submission) => <li>{submission}</li>);
+
     let submissionList = this.props.submissions.map((submission) => <li>{submission}</li>);
   
     return (

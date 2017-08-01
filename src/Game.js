@@ -5,6 +5,7 @@ import PiecesPane from './PiecesPane.js';
 import ListPane from './ListPane.js';
 import Button from './Button.js';
 import PuzzleDiag from './PuzzleDiag.js';
+import { puzzleData } from './puzzledata.js';
 
 // The Game class contains all the UI the users will interact with. The view and the list pane and 
 // the info pane will all reside in the Game Div. The intent here it to have this div retain the 
@@ -25,7 +26,7 @@ class Game extends Component {
 
     this.state = {
       isInfoMode: false,
-      renderPuzzle: false,
+      renderedPuzzle: null,
       origWidth: this.props.appWidth,
       origHeight: this.props.appHeight,
     };
@@ -42,9 +43,8 @@ class Game extends Component {
     this.updateActivePieces(requiredItems);
     if (this.arraysAreEqual(requiredItems.sort(), this.pieces.sort())) {
       this.setState({
-        renderPuzzle: true,
+        renderedPuzzle: puzzleData[puzzle],
       });
-      this.puzzle = puzzle;
     }
   }
 
@@ -68,9 +68,9 @@ class Game extends Component {
 
   // Clicking on the game obj will dismiss puzzle dialog. Maybe make it so the "X" must be clicked?
   handleGameClick() {
-    if (this.state.renderPuzzle) {
+    if (this.state.renderedPuzzle) {
       this.setState({
-        renderPuzzle: false,
+        renderedPuzzle: null,
       })
     }
   }
@@ -169,12 +169,12 @@ class Game extends Component {
           infoPaneTop = {infoPaneTop}
         />
       }
-      { this.state.renderPuzzle &&
+      { this.state.renderedPuzzle &&
         <PuzzleDiag
           puzzDiagLeft = {puzzDiagLeft}
           puzzDiagWidth = {puzzDiagWidth}
           puzzDiagHeight = {gameHeight}
-          puzzle = {this.puzzle}
+          puzzle = {this.state.renderedPuzzle}
         />
       }
       </div>
