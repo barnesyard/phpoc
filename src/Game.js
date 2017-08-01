@@ -5,7 +5,7 @@ import PiecesPane from './PiecesPane.js';
 import ListPane from './ListPane.js';
 import Button from './Button.js';
 import PuzzleDiag from './PuzzleDiag.js';
-import { puzzleData } from './puzzledata.js';
+import { Database } from './Database.js';
 
 // The Game class contains all the UI the users will interact with. The view and the list pane and 
 // the info pane will all reside in the Game Div. The intent here it to have this div retain the 
@@ -24,71 +24,54 @@ class Game extends Component {
       this.origWidth = this.props.appWidth;
     }
 
+    this.db = new Database();
+
     this.state = {
       isInfoMode: false,
       renderedPuzzle: null,
       origWidth: this.props.appWidth,
       origHeight: this.props.appHeight,
-      puzzles: puzzleData
     };
   }
   
   handleModeChange() {
-    this.setState({
-      isInfoMode: !this.state.isInfoMode,
-    });
+    this.setState(oldState => ({ isInfoMode: !oldState.isInfoMode }));
   }
 
   // When a room item is click and there is a puzzle in it we will show a puzzle dialog with the PDF
-  showPuzzle(puzzle, requiredItems) {
-    this.updateActivePieces(requiredItems);
-    if (this.arraysAreEqual(requiredItems.sort(), this.pieces.sort())) {
-      this.setState({
-        renderedPuzzle: this.state.puzzles[puzzle],
-      });
+  showPuzzleIfAllowed(puzzleId, selectedItems) {
+    let puzzle = this.db.showPuzzleIfAllowed(puzzleId, selectedItems);
+    console.log(puzzle);
+    if (puzzle) {
+      console.log('rendering it');
+      this.setState( { renderedPuzzle: puzzle } );
     }
   }
 
   submitGuess(puzzleId, guess) {
-    // Will need to call PH code to see if it is possible to make a guess
     // TO DO: verify that it is possible to submit (maybe gray out textbox)
 
-    // This will be a call to the PH code but for now it will verify against the local data
-    // The call to the PH code will update the status of the puzzle
-
-    let puzzle = this.state.puzzles[puzzleId];
-    if (guess === puzzle.answer) {
-      puzzle.status = "solved";
-    }
-    puzzle.guesses.push(guess);
-
-    this.setState(oldState => ({ puzzles: { ...oldState.puzzles, [puzzleId]: puzzle }}));
+    // Update the puzzle based on the result of the guess
+    let puzzle = this.db.submitGuess(puzzleId, guess);
+    this.setState( { renderedPuzzle: puzzle });
   }
 
   arraysAreEqual(x, y) {
-  if (x.length !== y.length) {
-    return false;
-  }
-  for (let i = 0; i < x.length; i++) {
-    if (x[i] !== y[i]) {
+    if (x.length !== y.length) {
       return false;
     }
-  }
+    for (let i = 0; i < x.length; i++) {
+      if (x[i] !== y[i]) {
+        return false;
+      }
+    }
     return true;
-  }
-
-  // This is a temp method that will be replaced by a call from a Piece obj in the PiecesPane
-  updateActivePieces(pieces) {
-    console.log("setting active pieces to :" + pieces);
-    this.pieces = pieces;
   }
 
   // Clicking on the game obj will dismiss puzzle dialog. Maybe make it so the "X" must be clicked?
   handleGameClick() {
-    if (this.state.renderedPuzzle) {
-      this.setState({
-        renderedPuzzle: null,
-      })
+    if (this.state.renderedPuzzle) { // Necessary because the click from opening the puzzle bubbles up
+      this.setState( { renderedPuzzle: null } );
     }
   }
 
@@ -150,7 +133,7 @@ class Game extends Component {
       <ViewPane
         viewWidth = {gameWidth}
         viewHeight = {gameHeight}
-        showPuzzle = {(puzzle, requiredItems) => this.showPuzzle(puzzle, requiredItems)}
+        showPuzzleIfAllowed ={(puzzleId) => this.showPuzzleIfAllowed(puzzleId /* FIXME PASS ITEMS */)}
         isInfoMode = {this.state.isInfoMode}
         scaleFactor = {scaleFactor}
       />

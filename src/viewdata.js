@@ -8,14 +8,14 @@ const  viewdata = [
       {
         "svg": <circle cx={25} cy={25} r={25} fill="purple" />,
         "name": "ceilingLight",
-        "puzzle": "Mute",
+        "puzzleTitle": "Mute",
         "requiredItems": ["nozzle", "hose"],
         "isHidden": false,
       },
       {
         "svg": <circle cx={25} cy={25} r={25} fill="yellow" />,
         "name": "pillow",
-        "puzzle": "",
+        "puzzleTitle": "",
         "requiredItems": [],
         "isHidden": false,
         "top": "5%",
@@ -27,7 +27,7 @@ const  viewdata = [
                <path d="M26.5 4h-6.5v-2.5c0-0.825-0.675-1.5-1.5-1.5h-7c-0.825 0-1.5 0.675-1.5 1.5v2.5h-6.5c-0.825 0-1.5 0.675-1.5 1.5v2.5h26v-2.5c0-0.825-0.675-1.5-1.5-1.5zM18 4h-6v-1.975h6v1.975z"></path>
                </g>,
         "name": "trashCan",
-        "puzzle": "traceMonkey",
+        "puzzleTitle": "traceMonkey",
         "requiredItems": ["hose", "nozzle"],
         "isHidden": false,
         "top": "80%",
@@ -36,7 +36,7 @@ const  viewdata = [
       {
         "svg": <rect x="0" y="0" width="100%" height="100%" fill="purple" />,
         "name": "bed",
-        "puzzle": "Test Monkey",
+        "puzzleTitle": "Test Monkey",
         "requiredItems": [],
         "isHidden": false,
         "top": "40%",
