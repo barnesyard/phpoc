@@ -53,6 +53,7 @@ class PuzzleDiag extends Component {
     return (
       <div className="puzzleDiag" style={style}
         onClick={(event) => this.handleClick(event)}>
+        <div className="puzzleTitle">{this.props.puzzle.title}</div>
         <AnswerForm submitGuess={guess => this.props.submitGuess(this.props.puzzle.title, guess)}/>
         <PuzzleAnswer puzzle={this.props.puzzle}/>
         <SubmittedGuesses guesses={this.props.puzzle.guesses}/>
@@ -96,7 +97,7 @@ class AnswerForm extends React.Component {
 
   render() {
     return (
-      <form class="answerForm" onSubmit={e => this.handleSubmit(e)}>
+      <form className="answerForm" onSubmit={e => this.handleSubmit(e)}>
         <input className="btnSubmit" type="submit" value="Submit" />
         <label className="txtInputLabel" >
           <input id="guessInput" className="txtInput" type="text" />
@@ -125,10 +126,10 @@ class SubmittedGuesses extends React.Component {
 
 class PuzzleAnswer extends React.Component {
   render() {
-    let answerText = (this.props.puzzle.status === "solved") ? this.props.puzzle.answer : "Not yet solved";
+    let answerText =  this.props.puzzle.status === "solved" ? this.props.puzzle.answer : "???";
   
     return (
-      <div className="answerBox">
+      <div className={`answerBox ${this.props.puzzle.status}`}>
         <div className="answerBoxLabel">
           Answer
           <div className="answerBoxText">
