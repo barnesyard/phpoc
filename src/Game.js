@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './index.css';
 import ViewPane from './ViewPane.js';
-import PiecesPane from './PiecesPane.js';
+import ThingsPane from './ThingsPane.js';
 import ListPane from './ListPane.js';
 import Button from './Button.js';
 import PuzzleDiag from './PuzzleDiag.js';
@@ -26,12 +26,24 @@ class Game extends Component {
 
     this.db = new Database();
 
+    let thingsInventory = this.db.getThingsInventory();
+    console.log("The things inventory: " + thingsInventory)
+
     this.state = {
       isInfoMode: false,
       renderedPuzzle: null,
       origWidth: this.props.appWidth,
       origHeight: this.props.appHeight,
+      thingsInventory: thingsInventory,
     };
+  }
+
+  updateThingsInventory(thingId) {
+    let theThing = this.state.thingsInventory[thingId];
+    theThing.selected = !theThing.selected;
+    let things = this.state.thingsInventory;
+    things[thingId] = theThing;
+    this.setState({thingsInventory: things});
   }
   
   handleModeChange() {
@@ -164,10 +176,12 @@ class Game extends Component {
         />
       }
       { this.state.isInfoMode &&
-        <PiecesPane
+        <ThingsPane
           infoPaneHeight = {infoPaneHeight}
           infoPaneWidth = {infoPaneWidth}
           infoPaneTop = {infoPaneTop}
+          thingsInventory = {this.state.thingsInventory}
+          updateThingsInventory = {(thingId) => this.updateThingsInventory(thingId)}
         />
       }
       { this.state.renderedPuzzle &&

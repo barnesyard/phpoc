@@ -100,7 +100,7 @@ class AnswerForm extends React.Component {
       <form className="answerForm" onSubmit={e => this.handleSubmit(e)}>
         <input className="btnSubmit" type="submit" value="Submit" />
         <label className="txtInputLabel" >
-          <input id="guessInput" className="txtInput" type="text" />
+          <input id="guessInput" className="txtInput" type="text" placeholder="Submit answer here"/>
         </label>
       </form>
     );
@@ -127,6 +127,7 @@ class SubmittedGuesses extends React.Component {
 class PuzzleAnswer extends React.Component {
   render() {
     let answerText =  this.props.puzzle.status === "solved" ? this.props.puzzle.answer : "???";
+    //let answerText = "";
   
     return (
       <div className={`answerBox ${this.props.puzzle.status}`}>
@@ -140,8 +141,5 @@ class PuzzleAnswer extends React.Component {
     );
   }
 }
-
-
-
 
 export default PuzzleDiag;

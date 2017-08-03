@@ -23,9 +23,22 @@ body {
   background: #82c;
   position: absolute;
 }
-.piecesPane {
+.thingsPane {
   background: #9c5;
   position: absolute;
+  overflow: hidden;
+  overflow: auto;  
+}
+.thing {
+  background: white;
+  border-style: solid;
+  position: relative;
+  overflow: hidden;
+}
+li.thingListItem {
+  list-style: none;
+  float: left;
+  padding: 10px;
 }
 .btn {
   position: absolute;

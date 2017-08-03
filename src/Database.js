@@ -7,11 +7,17 @@
 
 import { puzzleData } from './puzzledata.js';
 import { viewData } from './viewdata.js';
+import { thingData } from './thingData.js';
 
 class FakeDatabase {
   constructor() {
     this.puzzleData = puzzleData;
     this.viewData = viewData;
+    this.thingData = thingData;
+  }
+
+  getThingsInventory() {
+    return this.thingData;
   }
 
   getViewData() {
