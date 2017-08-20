@@ -45,9 +45,9 @@ class ListPane extends Component {
         //&& this.state.filteredTypes.has(puzzle.Solved ? '☑' : '☐');
   }
 
-  showPuzzleDiag(puzzle) {
-    // TODO: need to hook this up
-    console.log ("From the show puzzle in list pane: " + puzzle);
+  showPuzzleDiag(puzzleId) {
+    console.log ("From the show puzzle in list pane: " + puzzleId);
+    this.props.showPuzzle(puzzleId);
   }
 
   /////////////////////////////////////////////////////////////////////////////
@@ -215,8 +215,8 @@ export default ListPane;
 
 class PuzzleItem extends Component {
   
-  handleClick(puzzle) {
-    this.props.showPuzzleDiag(puzzle);
+  handleClick(puzzleId) {
+    this.props.showPuzzleDiag(puzzleId);
   }
   
   render() {

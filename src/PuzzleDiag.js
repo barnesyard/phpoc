@@ -127,7 +127,6 @@ class SubmittedGuesses extends React.Component {
 class PuzzleAnswer extends React.Component {
   render() {
     let answerText =  this.props.puzzle.status === "solved" ? this.props.puzzle.answer : "???";
-    //let answerText = "";
   
     return (
       <div className={`answerBox ${this.props.puzzle.status}`}>

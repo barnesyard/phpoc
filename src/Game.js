@@ -49,16 +49,28 @@ class Game extends Component {
     this.setState(oldState => ({ isInfoMode: !oldState.isInfoMode }));
   }
 
+  /////////////////////////////////////////////////////////////////////////////
   // When a room item is clicked and there is a puzzle in it we will show a
-  // puzzle dialog with the PDF. We will also show the puzzle dialog when
-  // the puzzle is clicked in the list of puzzles.
-  showPuzzleIfAllowed(puzzleId, selectedItems) {
+  // puzzle dialog with the PDF. 
+  exposePuzzleIfAllowed(puzzleId, selectedItems) {
     let puzzle = this.db.showPuzzleIfAllowed(puzzleId, selectedItems);
     console.log(puzzle);
     if (puzzle) {
       console.log('rendering it');
       this.setState( { renderedPuzzle: puzzle } );
     }
+  }
+
+  /////////////////////////////////////////////////////////////////////////////
+  // This method will open the puzzle dialog when exposed from a room or 
+  // from the puzzle list.
+  showPuzzle(puzzleId) {
+    let puzzle = this.db.getPuzzleInfo(puzzleId)
+    console.log("Going to show this puzzle dialog: " + puzzle);
+    if (puzzle) {
+      console.log('rendering it');
+      this.setState( { renderedPuzzle: puzzle } );
+    }    
   }
 
   submitGuess(puzzleId, guess) {
@@ -147,7 +159,7 @@ class Game extends Component {
         viewData = {this.db.getViewData()}
         viewWidth = {gameWidth}
         viewHeight = {gameHeight}
-        showPuzzleIfAllowed ={(puzzleId) => this.showPuzzleIfAllowed(puzzleId /* FIXME PASS ITEMS */)}
+        showPuzzleIfAllowed ={(puzzleId) => this.exposePuzzleIfAllowed(puzzleId /* FIXME PASS ITEMS */)}
         isInfoMode = {this.state.isInfoMode}
         scaleFactor = {scaleFactor}
       />
@@ -176,6 +188,7 @@ class Game extends Component {
           listPaneWidth = {listPaneWidth}
           listPaneLeft = {listPaneLeft}
           puzzleList = {this.state.puzzleList}
+          showPuzzle = {(puzzleId) => this.showPuzzle(puzzleId)}
         />
       }
       { this.state.isInfoMode &&

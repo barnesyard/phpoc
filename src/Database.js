@@ -5,7 +5,7 @@
 // a way to sync between users, and a way to push things from the hunt organizers
 // to the users (it's likely the last two will share a single implementation).
 
-import { puzzleData } from './puzzledata.js';
+import { PuzzleData } from './puzzledata.js';
 import { viewData } from './viewdata.js';
 import { thingData } from './thingData.js';
 import { ArcData } from './arcdata.js';
@@ -14,7 +14,7 @@ class FakeDatabase {
   constructor() {
     // The arcData comes in as a class to handle importing of images locally
     this.arcData = new ArcData().getArcData();
-    this.puzzleData = puzzleData;
+    this.puzzleData = new PuzzleData().getPuzzleData();
     this.viewData = viewData;
     this.thingData = thingData;
     this.arData = []
@@ -40,6 +40,13 @@ class FakeDatabase {
     return puzzles.filter(puzzle => puzzle.status !== "locked");
   }
 
+  // Not sure if this is the right approach here. In this method we pass in the 
+  // puzzle id so that we can get back the details about the puzzle 
+  // using the puzzle id to get it from the list of puzzles
+  getPuzzleInfo(puzzleId) {
+    return this.puzzleData[puzzleId];
+  }
+
   // TODO: deal with selectedItems
   showPuzzleIfAllowed(puzzleId, selectedItems) {
     let puzzle = this.puzzleData[puzzleId];
@@ -53,7 +60,7 @@ class FakeDatabase {
   submitGuess(puzzleId, guess) {
     let puzzle = this.puzzleData[puzzleId];
     if (puzzle.answer === guess) {
-      puzzle.status = "solved";
+      puzzle.status = "complete";
     }
     puzzle.guesses.push(guess);
 
