@@ -13,7 +13,9 @@ class Button extends Component {
         className="btn"
         style={buttonStyle}
         onClick={this.props.onClick}
-        >{this.props.btnLabel}</button>
+        >
+          {this.props.btnLabel}
+        </button>
     );
   }
 }

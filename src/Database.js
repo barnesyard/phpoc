@@ -8,12 +8,16 @@
 import { puzzleData } from './puzzledata.js';
 import { viewData } from './viewdata.js';
 import { thingData } from './thingData.js';
+import { ArcData } from './arcdata.js';
 
 class FakeDatabase {
   constructor() {
+    // The arcData comes in as a class to handle importing of images locally
+    this.arcData = new ArcData().getArcData();
     this.puzzleData = puzzleData;
     this.viewData = viewData;
     this.thingData = thingData;
+    this.arData = []
   }
 
   getThingsInventory() {
@@ -22,6 +26,10 @@ class FakeDatabase {
 
   getViewData() {
     return this.viewData;
+  }
+
+  getArcData() {
+    return this.arcData;
   }
 
   // TODO: have this set the initial state of the puzzle inventory

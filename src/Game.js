@@ -25,9 +25,7 @@ class Game extends Component {
     }
 
     this.db = new Database();
-
     let thingsInventory = this.db.getThingsInventory();
-    console.log("The things inventory: " + thingsInventory)
 
     this.state = {
       isInfoMode: false,
@@ -35,6 +33,7 @@ class Game extends Component {
       origWidth: this.props.appWidth,
       origHeight: this.props.appHeight,
       thingsInventory: thingsInventory,
+      puzzleList: this.db.getUnlockedPuzzles(),
     };
   }
 
@@ -50,7 +49,9 @@ class Game extends Component {
     this.setState(oldState => ({ isInfoMode: !oldState.isInfoMode }));
   }
 
-  // When a room item is click and there is a puzzle in it we will show a puzzle dialog with the PDF
+  // When a room item is clicked and there is a puzzle in it we will show a
+  // puzzle dialog with the PDF. We will also show the puzzle dialog when
+  // the puzzle is clicked in the list of puzzles.
   showPuzzleIfAllowed(puzzleId, selectedItems) {
     let puzzle = this.db.showPuzzleIfAllowed(puzzleId, selectedItems);
     console.log(puzzle);
@@ -170,9 +171,11 @@ class Game extends Component {
       />
       { this.state.isInfoMode &&
         <ListPane
+          arcData = {this.db.getArcData()}
           listPaneHeight = {listPaneHeight}
           listPaneWidth = {listPaneWidth}
           listPaneLeft = {listPaneLeft}
+          puzzleList = {this.state.puzzleList}
         />
       }
       { this.state.isInfoMode &&

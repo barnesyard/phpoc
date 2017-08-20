@@ -47,17 +47,17 @@ class Thing extends Component {
   }
 
   render() {
-    let topColor = 'lightgray';
-    let rightColor = 'gray';
-    let bottomColor = 'gray';
-    let leftColor = 'lightgray';
-    let backgroundColor = 'gray'
+    let bottomColor = 'lightgray';
+    let leftColor = 'gray';
+    let topColor = 'gray';
+    let rightColor = 'lightgray';
+    let backgroundColor = 'white'
     if(this.props.thing.selected) {
-      topColor = 'gray';
-      rightColor = 'lightgray';
-      bottomColor = 'lightgray';
-      leftColor = 'gray';
-      backgroundColor = 'white';
+      bottomColor = 'gray';
+      leftColor = 'lightgray';
+      topColor = 'lightgray';
+      rightColor = 'gray';
+      backgroundColor = 'gray';
       
     }
     let style = {

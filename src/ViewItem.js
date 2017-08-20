@@ -27,6 +27,7 @@ class ViewItem extends Component {
       //background: '#222',
       top: this.props.top,
       left: this.props.left,
+      filter: 'grayscale(0%)', // this will allow us to idicate things that have not been clicked
     };
 
     // This viewBox is part of the key to controlling the size of SVG code. I will leave here for now even though it does nothing.
