@@ -5,8 +5,6 @@ import ViewItem from './ViewItem.js';
 class ViewPane extends Component {
 
   render() {
-    // Is this where we should put in the scale factor? Need to think about how this works and maybe redesign
-    //let scaleFactor = this.props.isInfoMode ? .8 * this.props.scaleFactor: this.props.scaleFactor;
     let scaleFactor = this.props.isInfoMode ? .8 : 1;
     let style = {
      width: this.props.viewWidth + 'px',
@@ -14,25 +12,24 @@ class ViewPane extends Component {
      zoom: scaleFactor,
     };
 
-    let allViews = this.props.viewData;
     let viewItems = [];
-    allViews[0].items.forEach((viewItem) => {
-      viewItems.push(
+      this.props.viewData.items.forEach((viewItem) => {
+        viewItems.push(
         <ViewItem
-          showPuzzleIfAllowed={(puzzleId) => this.props.showPuzzleIfAllowed(puzzleId)}
-          viewHeight={this.props.viewHeight}
-          viewWidth={this.props.viewWidth}
+          roomItemClicked={(puzzleId, requiredItems) => this.props.roomItemClicked(puzzleId, requiredItems)}
+          getRoomItemStatus ={(puzzleId) => this.props.getRoomItemStatus(puzzleId)}
           svg={viewItem.svg}
+          top={viewItem.top}
+          left={viewItem.left}
+          width={viewItem.width}
           name={viewItem.name}
           isHidden={viewItem.isHidden}
           puzzleId={viewItem.puzzleTitle} // FIXME: make proper id?
-          top={viewItem.top}
-          left={viewItem.left}
           requiredItems={viewItem.requiredItems}
           key={viewItem.name}/>) 
     })
     
-  return (
+    return (
       <div className="viewpane" style={style}>
         {viewItems}
       </div>

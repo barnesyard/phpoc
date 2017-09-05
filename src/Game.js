@@ -7,6 +7,10 @@ import Button from './Button.js';
 import PuzzleDiag from './PuzzleDiag.js';
 import { Database } from './Database.js';
 
+// Data that will not be pulled from the database should be pulled into the UI here
+import { viewData } from './viewdata.js';
+
+
 // The Game class contains all the UI the users will interact with. The view and the list pane and 
 // the info pane will all reside in the Game Div. The intent here it to have this div retain the 
 // 16:9 ratio.
@@ -34,6 +38,7 @@ class Game extends Component {
       origHeight: this.props.appHeight,
       thingsInventory: thingsInventory,
       puzzleList: this.db.getUnlockedPuzzles(),
+      currentView: 0,
     };
   }
 
@@ -45,20 +50,71 @@ class Game extends Component {
     this.setState({thingsInventory: things});
   }
   
+  /////////////////////////////////////////////////////////////////////////////
+  // The modes we are change to/from is "Information Mode" which shows the
+  // list pane and "Full View Mode" which shows just the room.
   handleModeChange() {
     this.setState(oldState => ({ isInfoMode: !oldState.isInfoMode }));
   }
 
   /////////////////////////////////////////////////////////////////////////////
-  // When a room item is clicked and there is a puzzle in it we will show a
-  // puzzle dialog with the PDF. 
-  exposePuzzleIfAllowed(puzzleId, selectedItems) {
-    let puzzle = this.db.showPuzzleIfAllowed(puzzleId, selectedItems);
-    console.log(puzzle);
-    if (puzzle) {
-      console.log('rendering it');
-      this.setState( { renderedPuzzle: puzzle } );
+  // Check the list of current puzzles for the status to determine if and
+  // how to render the RoomItem. Passing a puzzleId with the assumption 
+  // that we will use IDs instead of titles.
+  getRoomItemStatus(puzzleId) {
+    let status = 'hidden'
+    // Items not assigned to a puzzle should be visible.
+    if (puzzleId === "") {
+      status = 'visible';
+    } else {
+      //TODO: Use Puzzle ID, this code is written to use puzzle title
+      let puzzle = this.state.puzzleList.find((element) => {
+        if(element.title === puzzleId) return element;
+      });
+      if(puzzle) {
+        status = puzzle.status;
+      }
     }
+
+    return status;
+  }
+
+  /////////////////////////////////////////////////////////////////////////////
+  // When a room item is clicked and there is a puzzle in it we will show a
+  // puzzle dialog with the PDF. Need to handle some state information too.
+  roomItemClicked(puzzleId, requiredItems) {
+    let puzzle = this.state.puzzleList.find((element) => {
+      if(element.title === puzzleId) return element;
+    });
+
+    // For the first time a puzzle is opened show the list pane. Assuming it
+    // is the first time a puzzle is open if there are 0 items in the list
+    if( this.state.puzzleList.filter((p) => {return p.status !== 'unlocked'}).length === 0) {
+      // only do this if it is not already open
+      if(!this.state.isInfoMode) {
+        this.handleModeChange();
+      }
+    }
+
+    if(puzzle) {
+      if(puzzle.status === 'unlocked') this.db.setPuzzleStatusOpen(puzzle.puzzleId);
+      this.showPuzzle(puzzle.puzzleId);
+    }
+  }
+  
+
+  /////////////////////////////////////////////////////////////////////////////
+  // This method will open the puzzle dialog when clicked on in the puzzle list.
+  // This is not needed after switching to use puzzle IDs.
+  showPuzzleFromList(puzzleId) {
+    let puzzle = this.state.puzzleList.find((element) => {
+      if(element.title === puzzleId) return element;
+    });
+
+    if(puzzle) {
+      this.showPuzzle(puzzle.puzzleId);
+    }
+    
   }
 
   /////////////////////////////////////////////////////////////////////////////
@@ -66,9 +122,7 @@ class Game extends Component {
   // from the puzzle list.
   showPuzzle(puzzleId) {
     let puzzle = this.db.getPuzzleInfo(puzzleId)
-    console.log("Going to show this puzzle dialog: " + puzzle);
     if (puzzle) {
-      console.log('rendering it');
       this.setState( { renderedPuzzle: puzzle } );
     }    
   }
@@ -76,9 +130,15 @@ class Game extends Component {
   submitGuess(puzzleId, guess) {
     // TO DO: verify that it is possible to submit (maybe gray out textbox)
 
+    // TODO: stop using the puzzle title 
+    // let puzzle = this.state.puzzleList.find((element) => {
+    //   if(element.title === puzzleId) return element;
+    // });
+
     // Update the puzzle based on the result of the guess
-    let puzzle = this.db.submitGuess(puzzleId, guess);
-    this.setState( { renderedPuzzle: puzzle });
+    let renderPuzzle = this.db.submitGuess(puzzleId, guess);
+    this.setState({puzzleList: this.db.getUnlockedPuzzles(),})
+    this.setState( { renderedPuzzle: renderPuzzle });
   }
 
   arraysAreEqual(x, y) {
@@ -93,20 +153,29 @@ class Game extends Component {
     return true;
   }
 
-  // Clicking on the game obj will dismiss puzzle dialog. Maybe make it so the "X" must be clicked?
+  /////////////////////////////////////////////////////////////////////////////
+  // This is to allow for users to click outside of puzzle dialog to close it.
   handleGameClick() {
+    // as of now we will only dismiss the puzzle dialog but maybe we need to do something else someday
+    this.closePuzzleDialog();
+  }
+
+  closePuzzleDialog() {
     if (this.state.renderedPuzzle) { // Necessary because the click from opening the puzzle bubbles up
       this.setState( { renderedPuzzle: null } );
     }
   }
 
   handleMoveViewRight () {
-    //do nothing right now
+    let currentView = this.state.currentView;
+    let newView = viewData.length === currentView + 1 ? 0 : currentView + 1; 
+    this.setState({currentView: newView})
   }
 
   handleMoveViewLeft () {
-    //do nothing right now
-    console.log("The scale factor" + this.scaleFactor)
+    let currentView = this.state.currentView;
+    let newView =  0 === currentView ? viewData.length - 1 : currentView - 1 ; 
+    this.setState({currentView: newView})
   }
 
   render() {
@@ -131,10 +200,9 @@ class Game extends Component {
       viewHeight = gameHeight;
     }
 
-    let listPaneWidth, listPaneHeight, listPaneLeft;
-    listPaneHeight = gameHeight;
-    listPaneWidth = .2 * gameWidth;
-    listPaneLeft = viewWidth;
+    let listPaneHeight = gameHeight;
+    let listPaneWidth = .2 * gameWidth;
+    let listPaneLeft = viewWidth;
 
     let infoPaneWidth, infoPaneHeight, infoPaneTop;
     infoPaneHeight = .2 * gameHeight;
@@ -156,10 +224,11 @@ class Game extends Component {
         onClick={() => this.handleGameClick()}
         style={style}>
       <ViewPane
-        viewData = {this.db.getViewData()}
+        viewData = {viewData[this.state.currentView]}
         viewWidth = {gameWidth}
         viewHeight = {gameHeight}
-        showPuzzleIfAllowed ={(puzzleId) => this.exposePuzzleIfAllowed(puzzleId /* FIXME PASS ITEMS */)}
+        getRoomItemStatus ={(puzzleId) => this.getRoomItemStatus(puzzleId)}
+        roomItemClicked ={(puzzleId, requiredItems) => this.roomItemClicked(puzzleId, requiredItems)}
         isInfoMode = {this.state.isInfoMode}
         scaleFactor = {scaleFactor}
       />
@@ -187,8 +256,8 @@ class Game extends Component {
           listPaneHeight = {listPaneHeight}
           listPaneWidth = {listPaneWidth}
           listPaneLeft = {listPaneLeft}
-          puzzleList = {this.state.puzzleList}
-          showPuzzle = {(puzzleId) => this.showPuzzle(puzzleId)}
+          puzzleList = {this.state.puzzleList.filter((p) => {return p.status !== 'unlocked'})}
+          showPuzzle = {(puzzleId) => this.showPuzzleFromList(puzzleId)}
         />
       }
       { this.state.isInfoMode &&
@@ -206,6 +275,7 @@ class Game extends Component {
           puzzDiagWidth = {puzzDiagWidth}
           puzzDiagHeight = {gameHeight}
           submitGuess = {(puzzleId, guess) => this.submitGuess(puzzleId, guess)}
+          close = {() => this.closePuzzleDialog()}
           puzzle = {this.state.renderedPuzzle}
         />
       }

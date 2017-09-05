@@ -24,7 +24,7 @@ class PuzzleDiag extends Component {
   }
 
   handleClose() {
-    //TODO add to the list of open puzzles
+    this.props.close();
   }
 
   onPdfDocumentLoad (total) {
@@ -54,7 +54,8 @@ class PuzzleDiag extends Component {
       <div className="puzzleDiag" style={style}
         onClick={(event) => this.handleClick(event)}>
         <div className="puzzleTitle">{this.props.puzzle.title}</div>
-        <AnswerForm submitGuess={guess => this.props.submitGuess(this.props.puzzle.title, guess)}/>
+        <AnswerForm submitGuess={guess => this.props.submitGuess(this.props.puzzle.puzzleId, guess)}/>
+        <PuzzleResponse puzzle={this.props.puzzle}/>
         <PuzzleAnswer puzzle={this.props.puzzle}/>
         <SubmittedGuesses guesses={this.props.puzzle.guesses}/>
         <Button key="openPdfButton"
@@ -126,14 +127,40 @@ class SubmittedGuesses extends React.Component {
 
 class PuzzleAnswer extends React.Component {
   render() {
-    let answerText =  this.props.puzzle.status === "solved" ? this.props.puzzle.answer : "???";
+    let answerText =  this.props.puzzle.status === "complete" ? this.props.puzzle.answer : "???";
+    let visibility = answerText === "???" ? 'hidden' : 'visible';
+    let style = {
+      visibility: visibility,
+     };
   
     return (
-      <div className={`answerBox ${this.props.puzzle.status}`}>
+      <div className={`answerBox ${this.props.puzzle.status}`} style={style}>
         <div className="answerBoxLabel">
           Answer
           <div className="answerBoxText">
             {answerText}
+          </div>
+        </div>
+      </div>
+    
+    );
+  }
+}
+
+class PuzzleResponse extends React.Component {
+  render() {
+    let repsonseText =  this.props.puzzle.status === "complete" ? "Correct!" : "That is not correct.";
+    let visibility = this.props.puzzle.guesses.length > 0 ? 'visible' : 'hidden';
+    let style = {
+      visibility: visibility,
+     };
+   
+    return (
+      <div className={`responseBox ${this.props.puzzle.status}`} style={style}>
+        <div className="responseBoxLabel">
+          Response
+          <div className="responseBoxText">
+            {repsonseText}
           </div>
         </div>
       </div>

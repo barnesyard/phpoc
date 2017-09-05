@@ -1,9 +1,9 @@
-import dummyImg from './assets/img/dummy.png';
-import hourglassImg from './assets/img/hourglass.png';
-import emc2Img from './assets/img/emc2.png';
-import eyeImg from './assets/img/eye.png';
-import windowsImg from './assets/img/windows.png';
-import funnelImg from './assets/img/funnel.png';
+import dummyImg from './assets/img/figure.svg';
+import hourglassImg from './assets/img/hourglass.svg';
+import emc2Img from './assets/img/emc2.svg';
+import eyeImg from './assets/img/eye.svg';
+import windowsImg from './assets/img/window.svg';
+import funnelImg from './assets/img/funnel.svg';
 
 class ArcData {
   constructor() {

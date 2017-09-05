@@ -6,42 +6,25 @@ class ViewItem extends Component {
   handleClick() {
     // There will be decorative objects that won't be clickable. Those won't have a puzzle associated with them.
     if (this.props.puzzleId) {
-      // Some puzzles may require an object before the itme is clickable. Since we are passing
-      // the puzzle name to the game object that has access to object list data handle that there.
-      this.props.showPuzzleIfAllowed(this.props.puzzleId);
+      // Pass the puzzle ID that is associated with the room items back up to game object
+      // where it will do the right thing. Some puzzles may require an object before the item is clickable. 
+      this.props.roomItemClicked(this.props.puzzleId, this.props.requiredItems);
     }
   }
 
   render() {
-    // Is this where we should put in the scale factor? Need to think about how this works and maybe redesign
-    //let scaleFactor = this.props.isInfoMode ? .8 * this.props.scaleFactor: this.props.scaleFactor;
-    let scaleFactor = 1;
+    let status = this.props.getRoomItemStatus(this.props.puzzleId);
+    let grayscale = status === 'unlocked' ? 'grayscale(100%)' : 'grayscale(0%)';
     let style = {
-
-      // Let's play around with the style that is applied to the div around the SVG and
-      // to the SVG itself. Leave this commented stuff here until we get handle on what really works.
-//     width: '10%',
-//     height: '10%',
-      zoom: scaleFactor,
+      width: this.props.width,
       position: 'absolute',
-      //background: '#222',
       top: this.props.top,
       left: this.props.left,
-      filter: 'grayscale(0%)', // this will allow us to idicate things that have not been clicked
+      filter: grayscale, // this will allow us to idicate things that have not been clicked
     };
 
-    // This viewBox is part of the key to controlling the size of SVG code. I will leave here for now even though it does nothing.
-    //var viewBox = [0, 0, 100, 100];
-    // put this in the <svg> element when you are read to experiment viewBox={viewBox}
-
     return (
-      <div className={this.props.name} style={style} >
-        {!this.props.isHidden &&
-          <svg onClick={() => this.handleClick()} >
-            {this.props.svg}
-          </svg>
-        }
-      </div>
+      (status === 'hidden') ?  null : <img src={this.props.svg} className={this.props.name} alt={this.props.name} style={style} onClick={() => this.handleClick()}/>
     );
   }
 }
